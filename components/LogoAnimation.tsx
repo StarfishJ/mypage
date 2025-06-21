@@ -35,7 +35,7 @@ export const LogoAnimation = () => {
                     <motion.div
                         className="flex gap-14 flex-none pr-14"
                         animate={{
-                            translateX: '-50%',
+                            x: '-50%',
                         }}
                         transition={{
                             duration: 35,
