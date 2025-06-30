@@ -15,7 +15,8 @@ const projects = [
     },
     {
         id: 2, year: "2025", title: "AI travel planner mobile app", description: "A mobile app that uses AI to plan trips and provide recommendations for activities and attractions.", 
-        image: project2, link: "",
+        image: project2, link: "https://youtube.com/shorts/BrywLxQclu4?si=o-ofd5huGjJcP_Iz",
+        videoId: "BrywLxQclu4",
     },
     {
         id: 3, year: "2025", title: "Ongoing", description: "multi-vendor E-Commerce SaaS by using Microservice Architecture", 
@@ -25,20 +26,33 @@ const projects = [
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"]
 
-
 export const Portfolio = () => {
     const [selectedProject, setSelectedProject] = useState(projects[0]);
+    const [showVideo, setShowVideo] = useState(false);
     const color = useMotionValue(COLORS_TOP[0]);
     const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #000 50%, ${color})`
 
     useEffect(() => {
         animate(color, COLORS_TOP, {
-            ease: "easeInOut",  // This is the easing function
-            duration: 10,       // This is the duration of the animation
-            repeat: Infinity,   // This is the number of times the animation will repeat
-            repeatType: "mirror", // This is the type of repeat
+            ease: "easeInOut",
+            duration: 10,
+            repeat: Infinity,
+            repeatType: "mirror",
         })
-    }, [])
+    }, [color])
+
+    // 当选择的项目改变时，重置视频状态
+    useEffect(() => {
+        setShowVideo(false);
+    }, [selectedProject]);
+
+    const handleImageClick = () => {
+        if (selectedProject.id === 2 && selectedProject.videoId) {
+            setShowVideo(true);
+        } else if (selectedProject.link) {
+            window.open(selectedProject.link, '_blank');
+        }
+    };
 
     return (
         <motion.section 
@@ -71,9 +85,19 @@ export const Portfolio = () => {
                         )}
                         {selectedProject.id === project.id && (
                             <p className="text-purple-200 transition-all duration-500 ease-in-out">
-                                <a href={project.link}>
-                                    Preview
-                                </a>
+                                {selectedProject.id === 2 ? (
+                                    showVideo ? (
+                                        <span onClick={() => setShowVideo(false)} className="cursor-pointer">
+                                            Hide Video
+                                        </span>
+                                    ) : (
+                                        <span>Click image to watch demo</span>
+                                    )
+                                ) : (
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                        Preview
+                                    </a>
+                                )}
                             </p>
                         )}
                     
@@ -81,12 +105,50 @@ export const Portfolio = () => {
                 ))}
             </div>
 
-            <Image
-                src={selectedProject.image}
-                alt={selectedProject.title}
-                height={450}
-                className="rounded-xl shadow-lg transition-opacity duration-500 ease-in-out"
-            />
+            <div className="relative">
+                {selectedProject.id === 2 && showVideo ? (
+                    <div className="relative w-full h-[450px] rounded-xl overflow-hidden shadow-lg">
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            src={`https://www.youtube.com/embed/${selectedProject.videoId}?autoplay=1`}
+                            title={selectedProject.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="rounded-xl"
+                        ></iframe>
+                        <button 
+                            onClick={() => setShowVideo(false)}
+                            className="absolute top-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full hover:bg-black/70 transition-colors"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                ) : (
+                    <div 
+                        onClick={handleImageClick}
+                        className="cursor-pointer relative group"
+                    >
+                        <Image
+                            src={selectedProject.image}
+                            alt={selectedProject.title}
+                            height={450}
+                            className="rounded-xl shadow-lg transition-opacity duration-500 ease-in-out group-hover:opacity-90"
+                        />
+                        {selectedProject.id === 2 && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
+                                <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
+                                    <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                                    </svg>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
+
             </div>
 
         </motion.section>
