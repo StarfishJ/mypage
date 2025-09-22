@@ -5,6 +5,7 @@ import Image from "next/image";
 import project1 from "@/assets/proj1.png";
 import project2 from "@/assets/proj2.png";
 import project3 from "@/assets/proj3.png";
+import project4 from "@/assets/proj4.png";
 import { useMotionTemplate, useMotionValue, motion, animate } from "framer-motion";
 
 const projects = [
@@ -20,8 +21,19 @@ const projects = [
         videoId: "BrywLxQclu4",
     },
     {
-        id: 3, year: "2025", title: "E-mall: Distributed Microservices E-Commerce (user & seller UI)", description: "multi-vendor E-Commerce SaaS by using Microservice Architecture. Stack: Express.js, Next.js, Apache Kafka, MongoDB, Docker, Nx, Prisma, AWS (ECS, EC2, CloudWatch), Socket.IO, Stripe", 
-        image: project3, link: "https://youtu.be/h4ty4_51Eec?si=sNAAJs5VFFLj6f7a",
+        id: 3, year: "2025", title: "Character data management system",
+        description: "This application is a Character Management System built using Java and the MVC (Model-View-Controller) architecture. It provides a user-friendly interface for managing and viewing celebrity information, with features including:\
+        Display and manage celebrity profiles;\
+        Filter and sort celebrity information;\
+        Add/remove celebrities to/from wishlist;\
+        View detailed celebrity information;\
+        Save wishlist to JSON file",
+        image: project3, link: "https://github.com/StarfishJ/Character-Management-System-built-using-Java.git",
+
+    },
+    {
+        id: 4, year: "2025", title: "E-mall: Distributed Microservices E-Commerce (user & seller UI)", description: "multi-vendor E-Commerce SaaS by using Microservice Architecture. Stack: Express.js, Next.js, Apache Kafka, MongoDB, Docker, Nx, Prisma, AWS (ECS, EC2, CloudWatch), Socket.IO, Stripe", 
+        image: project4, link: "https://youtu.be/h4ty4_51Eec?si=sNAAJs5VFFLj6f7a",
         videoId: "h4ty4_51Eec",
     },
 ]
@@ -87,7 +99,7 @@ export const Portfolio = () => {
                         )}
                         {selectedProject.id === project.id && (
                             <p className="text-purple-200 transition-all duration-500 ease-in-out">
-                                {selectedProject.id === 2 || selectedProject.id === 3 ? (
+                                {selectedProject.id === 2 || selectedProject.id === 4 ? (
                                     showVideo ? (
                                         <span onClick={() => setShowVideo(false)} className="cursor-pointer">
                                             Hide Video
@@ -108,7 +120,7 @@ export const Portfolio = () => {
             </div>
 
             <div className="relative">
-                {(selectedProject.id === 2 || selectedProject.id === 3) && showVideo ? (
+                {(selectedProject.id === 2 || selectedProject.id === 4) && showVideo ? (
                     <div className="relative w-full h-[450px] rounded-xl overflow-hidden shadow-lg">
                         <iframe
                             width="100%"
@@ -138,7 +150,7 @@ export const Portfolio = () => {
                             height={450}
                             className="rounded-xl shadow-lg transition-opacity duration-500 ease-in-out group-hover:opacity-90"
                         />
-                        {(selectedProject.id === 2 || selectedProject.id === 3) && (
+                        {(selectedProject.id === 2 || selectedProject.id === 4) && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl">
                                 <div className="bg-white/20 backdrop-blur-sm rounded-full p-4">
                                     <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
